@@ -4,7 +4,7 @@
   "main": "app.js",
   "license": "MIT",
   "scripts": {
-    "start": "node app.js",
+    "start": "node public/",
     "serve": "live-server public/",
     "build": "webpack",
     "dev-server": "webpack-dev-server"
