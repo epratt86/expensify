@@ -1,12 +1,32 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import ExpenseForm from './ExpenseForm';
+import { editExpense, removeExpense } from '../actions/expenses';
 
 const EditPage = (props) => {
-  console.log(props.match.params.id);
   return (
     <div>
-      <p>You are about to edit: {props.match.params.id}</p>
+      <ExpenseForm
+        expense={props.expense}
+        onSubmit={(expense) => {
+          props.dispatch(editExpense(props.expense.id, expense));
+          props.history.push('/');
+        }}
+      />
+      <button onClick={() => {
+        props.dispatch(removeExpense({ id: props.expense.id }));
+        props.history.push('/');
+      }}>Remove</button>
     </div>
   );
 };
 
-export default EditPage;
+const mapStateToProps = (state, props) => {
+  return {
+    //add new state called 'expense'. 
+    //look thru the expenses state and find where the expense id matches the props id
+    expense: state.expenses.find((expense) => expense.id === props.match.params.id)
+  }
+}
+
+export default connect(mapStateToProps)(EditPage);
